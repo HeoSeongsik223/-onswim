@@ -1,0 +1,8 @@
+'use client';
+import {useState} from 'react';
+import {getSupabase} from '@/lib/supabase';
+export default function ReportShop({shopId}:{shopId:string}){
+ const [reason,setReason]=useState(''),[message,setMessage]=useState(''),[busy,setBusy]=useState(false),[open,setOpen]=useState(false);
+ async function submit(e:React.FormEvent<HTMLFormElement>){e.preventDefault();if(reason.trim().length<10){setMessage('신고 사유를 10자 이상 입력해 주세요.');return;}setBusy(true);setMessage('');try{const sb=getSupabase();const {data:{user},error:authError}=await sb.auth.getUser();if(authError||!user){setMessage('신고하려면 업주센터에서 먼저 로그인해 주세요.');return;}const {error}=await sb.from('reports').insert({shop_id:shopId,reporter_id:user.id,reason:reason.trim(),status:'open'});if(error)throw error;setMessage('신고가 접수되었습니다. 운영자가 확인하겠습니다.');setReason('');setOpen(false);}catch(err){setMessage(err instanceof Error?err.message:'신고 접수에 실패했습니다.');}finally{setBusy(false);}}
+ return <div className="report-area"><button className="btn secondary" type="button" onClick={()=>setOpen(!open)}>{open?'신고 닫기':'업소 정보 신고'}</button>{open&&<form onSubmit={e=>void submit(e)} className="card" style={{marginTop:12}}><h3>업소 정보 신고</h3><p className="muted">허위 정보, 영업 관련 우려, 부적절한 콘텐츠 등을 신고해 주세요. 긴급한 위험은 관계 기관에 직접 신고하세요.</p><label htmlFor="report-reason">신고 사유</label><textarea id="report-reason" required minLength={10} maxLength={2000} rows={4} value={reason} onChange={e=>setReason(e.target.value)} placeholder="구체적인 사유를 입력해 주세요 (10자 이상)"/><button type="submit" className="btn" disabled={busy}>{busy?'접수 중...':'신고 제출'}</button></form>}{message&&<p role="status" className="notice">{message}</p>}</div>;
+}

@@ -1,0 +1,1 @@
+-- This migration was applied to Onswim Production on 2026-10-31. See live Supabase migration history for authoritative SQL.

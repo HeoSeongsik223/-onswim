@@ -1,0 +1,4 @@
+import './globals.css';
+import Link from 'next/link';
+export const metadata={title:'온스윔 | 전국 웰니스 업소 찾기',description:'전국 웰니스·스파 업소 정보를 지역별로 탐색하는 온스윔'};
+export default function RootLayout({children}:{children:React.ReactNode}){return <html lang="ko"><body><header className="nav"><div className="wrap nav-inner"><Link className="brand" href="/">온스윔<span className="brand-dot">.</span><small>ONSWIM</small></Link><nav className="links" aria-label="주 메뉴"><Link href="/">업소 찾기</Link><Link href="/ads">광고 안내</Link><Link href="/owner">업주센터</Link><Link href="/admin">관리자</Link></nav></div></header><main className="wrap main-wrap">{children}</main><footer className="site-footer"><div className="wrap footer-inner"><div><strong>온스윔<span className="brand-dot">.</span></strong><p>가까운 곳에서 발견하는 나만의 쉼.</p></div><div><p>서비스 준비 중 · 등록 업소의 자격 및 영업 적법성 심사 후 공개</p><p>© 2026 ONSWIM. All rights reserved.</p></div></div></footer></body></html>}

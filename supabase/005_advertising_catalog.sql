@@ -1,0 +1,5 @@
+-- Applied to the Onswim Supabase project. Products are indicative; checkout is disabled.
+-- ad_products: three proposed 30-day packages.
+-- ad_orders/payments: owner read-only policies.
+-- ad_campaigns: public reads only for paid, active campaigns attached to approved shops.
+-- No client-side INSERT policy is granted for ad_orders or payments.
